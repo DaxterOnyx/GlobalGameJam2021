@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     [Header("Game Component")]
     [SerializeField] private GameObject m_mantra;
     [SerializeField] private GameObject m_chest;
-    private GameObject m_player;
-    private GameObject m_place;
+    [SerializeField] private GameObject m_player;
+    [SerializeField] private GameObject m_place;
     private PlayerControl playerScript;
     
     private List<Vector3> soulSpawnPos = null;
@@ -41,14 +41,16 @@ public class GameManager : MonoBehaviour
             m_instance = this;
         }
 
-        m_place = GameObject.FindGameObjectsWithTag("Place")[0];
-        m_player = GameObject.FindGameObjectsWithTag("Player")[0];
         playerScript = m_player.GetComponent<PlayerControl>();
         
         soulSpawnPos = AllSpawnPoint("SpawnSoul");
-        mantraSpawnPos = AllSpawnPoint("SpawnMantra");
         currentSoulSpawnPos = soulSpawnPos[0];
+        mantraSpawnPos = AllSpawnPoint("SpawnMantra");
         currentMantraSpawnPos = mantraSpawnPos[0];
+        
+        if (m_initNbRoundToWin > mantraSpawnPos.Count) {
+            m_initNbRoundToWin = mantraSpawnPos.Count;
+        }
     }
     
     void Start()
@@ -119,9 +121,11 @@ public class GameManager : MonoBehaviour
     
     IEnumerator CountdownTimer() {
         int counter = m_initTimerToFoundChest;
+        UITimer.Instance.ShowTime();
         while (counter > 0 && !secondChanceUsed) 
         {
             Debug.Log("Timer : " + counter);
+            UITimer.Instance.SetTime((int) Mathf.Floor(counter / 60f), counter%60);
             yield return new WaitForSeconds(1);
             counter--;
         }
@@ -131,6 +135,7 @@ public class GameManager : MonoBehaviour
         else {
             EndGameLose();
         }
+        UITimer.Instance.HideTime();
     }
 
     private Vector3 newRandomPos(List<Vector3> listPos, Vector3 oldPos) {
