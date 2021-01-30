@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="Game.uss" />
+    <ui:Label text="00:00" display-tooltip-when-elided="false" name="TimeLeft" view-data-key="TimeLeft" style="-unity-text-align: middle-center; font-size: 24px; color: rgba(255, 255, 255, 255);" />
+</ui:UXML>
