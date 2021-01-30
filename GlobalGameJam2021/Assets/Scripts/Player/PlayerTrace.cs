@@ -23,7 +23,7 @@ namespace Player
             var scope = frameCounter / Positions.Count;
             if (scope % 2 == 1)
                 i = Positions.Count - 1 - i;
-            Debug.Log(frameCounter + "->" + i + "/" + Positions.Count);
+//            Debug.Log(frameCounter + "->" + i + "/" + Positions.Count);
             return Positions[i];
         }
 

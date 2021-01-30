@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MantraControl : MonoBehaviour
+public class ItemControl : MonoBehaviour
 {
     private Rigidbody2D rigid;
     
@@ -13,7 +13,11 @@ public class MantraControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.name == "Player")
         {
-            GameManager.Instance.FoundMantra(gameObject);
+            if (gameObject.transform.name.Contains("Mantra")) {
+                GameManager.Instance.FoundMantra(gameObject);
+            } else if (gameObject.transform.name.Contains("Chest")) {
+                GameManager.Instance.FoundChest(gameObject);
+            }
         }
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
@@ -12,14 +13,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float m_initTimer;
 
     [Header("Game Component")]
-    [SerializeField] private GameObject m_player;
-    [SerializeField] private GameObject m_place;
     [SerializeField] private GameObject m_mantra;
+    [SerializeField] private GameObject m_chest;
+    private GameObject m_player;
+    private GameObject m_place;
     private PlayerControl playerScript;
     
-    private List<Vector3> playerSpawnPos = null;
+    private List<Vector3> soulSpawnPos = null;
+    private List<Vector3> soulSpawnPosUsed = new List<Vector3>();
+    
     private List<Vector3> mantraSpawnPos = null;
-    private Vector3 currentPlayerSpawnPos;
+    private Vector3 currentSoulSpawnPos;
     private Vector3 currentMantraSpawnPos;
 
     private int mantraCounter = 0;
@@ -28,19 +32,21 @@ public class GameManager : MonoBehaviour
     {
         if (m_instance != null && m_instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
             m_instance = this;
         }
 
-        playerScript = m_place.GetComponent<PlayerControl>();
-        playerSpawnPos = AllSpawnPoint("PlayerSpawn");
-        mantraSpawnPos = AllSpawnPoint("MantraSpawn");
-        currentPlayerSpawnPos = playerSpawnPos[0];
+        m_place = GameObject.FindGameObjectsWithTag("Place")[0];
+        m_player = GameObject.FindGameObjectsWithTag("Player")[0];
+        playerScript = m_player.GetComponent<PlayerControl>();
+        
+        soulSpawnPos = AllSpawnPoint("SpawnSoul");
+        mantraSpawnPos = AllSpawnPoint("SpawnMantra");
+        currentSoulSpawnPos = soulSpawnPos[0];
         currentMantraSpawnPos = mantraSpawnPos[0];
-
     }
     
     private void Start()
@@ -55,27 +61,48 @@ public class GameManager : MonoBehaviour
 
     public void FoundMantra(GameObject mantra) {
         Destroy(mantra);
-        mantraCounter++;
-        InitNewRound();
+        playerScript.IntoSoul();
+        
+        //spawnSoul
+        Vector3 bufferPos = m_player.transform.position;
+        while (soulSpawnPosUsed.Contains(currentSoulSpawnPos)) {
+            currentSoulSpawnPos = newRandomPos(soulSpawnPos, currentSoulSpawnPos);
+        }
+        soulSpawnPosUsed.Add(currentSoulSpawnPos);
+        m_player.transform.position = currentSoulSpawnPos;
+
+        StartCoroutine("SpawningChest", bufferPos);
     }
 
-    public void InitNewRound() 
+    private IEnumerator SpawningChest(Vector3 bufferPos) 
     {
-        //spawnPlayer
-        currentPlayerSpawnPos = newRandomPos(playerSpawnPos, currentPlayerSpawnPos);
-        m_player.transform.position = currentPlayerSpawnPos;
-        
+        playerScript.FreezMouving = true;
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(m_chest,  bufferPos, Quaternion.identity);
+        playerScript.FreezMouving = false;
+        SoulManager.Instance.WakeUpSouls();
+    }
+
+    public void FoundChest(GameObject chest) {
+        mantraCounter++;
+        Debug.Log("mantraCounter : " + mantraCounter);
+        Destroy(chest);
+        playerScript.IntoChest();
+        InitNewRound();
+        SoulManager.Instance.SleepSouls();
+    }
+    
+    void InitNewRound() {
         //spawn mantra
         currentMantraSpawnPos = newRandomPos(mantraSpawnPos, currentMantraSpawnPos);
         Instantiate(m_mantra,  currentMantraSpawnPos, Quaternion.identity);
     }
-    
-    private void StartGame() 
-    {
+
+    private void StartGame() {
         Debug.Log("StartGame");
         InitNewRound();
     }
-    
+
     public void EndGame()
     {
         Debug.Log("EndGame");
@@ -84,7 +111,7 @@ public class GameManager : MonoBehaviour
     private Vector3 newRandomPos(List<Vector3> listPos, Vector3 oldPos) {
         Vector3 toReturn = oldPos;
         while (toReturn == oldPos) {
-            toReturn = listPos[Random.Range(0, playerSpawnPos.Count)];
+            toReturn = listPos[Random.Range(0, soulSpawnPos.Count)];
         }
         return toReturn;
     }
@@ -109,9 +136,9 @@ public class GameManager : MonoBehaviour
                 Gizmos.DrawSphere(point, 0.15f);
             }
         }
-        playerSpawnPos = AllSpawnPoint("SpawnMantra");
-        if (playerSpawnPos != null) {
-            foreach (Vector3 point in playerSpawnPos) {
+        soulSpawnPos = AllSpawnPoint("SpawnMantra");
+        if (soulSpawnPos != null) {
+            foreach (Vector3 point in soulSpawnPos) {
                 Gizmos.color = Color.magenta;
                 Gizmos.DrawSphere(point, 0.15f);
             }
