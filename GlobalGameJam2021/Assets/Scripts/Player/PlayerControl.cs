@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -8,62 +9,68 @@ namespace Player
         [SerializeField] private float speed = 1;
         [SerializeField] private bool constantMove = true;
         [SerializeField] private float threshold = 0.1f;
+        
+        [SerializeField] private Animator animator;
+        [SerializeField] private Transform viewDirection; 
+        
         private Rigidbody2D rigid;
         private bool moving = false;
-        private Vector2 direction = Vector2.down;
-        private bool m_freez_moving = false;
+        private Camera _cam;
+        public Vector2 Direction { get; private set; } = Vector2.down;
 
+        public bool FreezeMoving { get; set; } = false;
+        
         public enum Type {
             Chest,
             Soul
         }
-
-        private Type m_player_type = Type.Chest;
-
-        // Start is called before the first frame update
+        public Type PlayerType { get; private set; } = Type.Chest;
+        
+        
         void Start()
         {
             rigid = GetComponent<Rigidbody2D>();
+            _cam = Camera.main;
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-                moving = true;
-            if (moving && Input.GetMouseButtonUp(0))
-                moving = false;
-            
-            if (!FreezMouving) {
-                direction = ((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition)) -
-                            ((Vector2) transform.position);
-                float dist = direction.magnitude;
-                if (constantMove) direction.Normalize();
-                Vector2 velocity = Vector2.zero;
-                if (moving && dist > threshold)
-                {
-                    velocity = direction * speed;
-                }
-
-                rigid.velocity = velocity;
-            }
-            else {
+            if (FreezeMoving)
+            {
                 rigid.velocity = Vector2.zero;
+                return;
             }
+            
+            moving = Input.GetMouseButton(0);
+
+            Vector2 dir = (Vector2) _cam.ScreenToWorldPoint(Input.mousePosition) - (Vector2) transform.position;
+            Vector2 normDir = dir.normalized;
+
+            viewDirection.up = normDir;
+            
+            animator.SetBool("Walk", moving);
+            animator.SetFloat("DirX", normDir.x);
+            animator.SetFloat("DirY", normDir.y);
+
+            Direction = constantMove ? normDir : dir;
+            
+            if (moving && dir.magnitude > threshold) 
+                rigid.velocity = Direction * speed; 
+            else 
+                rigid.velocity = Vector2.zero;
         }
-        
-        public void IntoSoul() 
+
+        public void IntoSoul()
         {
-            m_player_type = Type.Soul;
+            animator.SetBool("Soul", true);
+            PlayerType = Type.Soul;
         }
-        
-        public void IntoChest() 
+
+        public void IntoChest()
         {
-            m_player_type = Type.Chest;
+            animator.SetBool("Soul", false);
+            PlayerType = Type.Chest;
         }
-        
-        public Type PlayerType { get { return m_player_type; } }
-        public bool FreezMouving { get { return m_freez_moving; } set { m_freez_moving = value; } }
-        
+
     }
 }

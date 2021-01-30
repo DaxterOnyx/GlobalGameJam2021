@@ -18,6 +18,7 @@ namespace Visibility
     [Serializable]
     public class ViewerData
     {
+        public Collider2D collider;
         public Transform transform;
         public float viewAngle = 40;
         public float maxDistance = 7;

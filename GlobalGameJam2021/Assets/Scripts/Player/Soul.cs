@@ -7,12 +7,15 @@ namespace Player
     public class Soul : MonoBehaviour
     {
         [SerializeField] private int index = 0;
-
+        [SerializeField] private Animator animator;
+        
         private PlayerTrace trace;
         private bool isMoving = false;
         private int frameCounter;
 
-        // Start is called before the first frame update
+        private Vector2 _pos;
+        private Vector2 _dir;
+
         public void StartMove(PlayerTrace t)
         {
             trace = t;
@@ -20,27 +23,33 @@ namespace Player
             isMoving = true;
             FixedUpdate();
             gameObject.SetActive(true);
+            animator.SetBool("Walk", true);
         }
-
-        // Update is called once per frame
-        void FixedUpdate()
-        {
-            if (isMoving)
-            {
-                var pos = trace.GetPos(frameCounter);
-                var dir = trace.GetDir(frameCounter);
-
-                transform.position = pos;
-                //TODO copy direction;
-                frameCounter++;
-            }
-        }
-
+        
         public void StopMove()
         {
             isMoving = false;
             frameCounter = 0;
+            animator.SetBool("Walk", false);
             gameObject.SetActive(false);
+        }
+
+        void FixedUpdate()
+        {
+            if (isMoving)
+            {
+                _pos = trace.GetPos(frameCounter);;
+                _dir = trace.GetDir(frameCounter);
+                
+                transform.position = _pos;
+                frameCounter++;
+            }
+        }
+
+        private void Update()
+        {
+            animator.SetFloat("DirX", _dir.x);
+            animator.SetFloat("DirY", _dir.y);
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Visibility
     {
         [SerializeField] private ViewerList list;
 
-        [Header("Data")]
+        [Header("Data")] 
+        [SerializeField] private Collider2D checkCollider;
         [SerializeField] private float viewAngle = 40;
         [SerializeField] private float maxDistance = 7;
 
@@ -17,6 +18,7 @@ namespace Visibility
         {
             _data = new ViewerData()
             {
+                collider = this.checkCollider,
                 transform = this.transform,
                 maxDistance = this.maxDistance,
                 viewAngle = this.viewAngle,

@@ -42,10 +42,10 @@ namespace Visibility
                             // skipping points not in angle
                             var angle = Vector2.Angle(viewer.transform.up, dir);
                             if (Mathf.Abs(angle) > viewer.viewAngle / 2) continue;
-                    
+
                             // raycast from target to viewer, so only viewer need a collider
                             var hit = Physics2D.Raycast(point, -dir);
-                            if (hit.transform == viewer.transform) visible = true;
+                            if (hit.collider == viewer.collider) visible = true;
                         }
                     }
                 }
