@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Visibility
 {
@@ -10,16 +11,26 @@ namespace Visibility
         [SerializeField] private float viewAngle = 40;
         [SerializeField] private float maxDistance = 7;
 
-        private void Start()
+        private ViewerData _data;
+
+        private void Awake()
         {
-            var data = new ViewerData()
+            _data = new ViewerData()
             {
                 transform = this.transform,
                 maxDistance = this.maxDistance,
                 viewAngle = this.viewAngle,
             };
-            
-            list.viewers.Add(data);
+        }
+
+        private void OnEnable()
+        {
+            list.viewers.Add(_data);
+        }
+
+        private void OnDisable()
+        {
+            list.viewers.Remove(_data);
         }
     }
 }

@@ -1,0 +1,37 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="Game.uss" />
+    <ui:VisualElement style="align-items: center; justify-content: center; flex-direction: column; flex-grow: 1;">
+        <ui:VisualElement name="Menu">
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="Play" />
+            <ui:Button text="About" display-tooltip-when-elided="true" name="About" />
+            <ui:Button text="Quit" display-tooltip-when-elided="true" name="Quit" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Credits" style="align-items: center; justify-content: space-around; display: none; overflow: hidden; visibility: visible;">
+            <ui:VisualElement name="Name" class="Name">
+                <ui:Label text="Théo Lemoine" display-tooltip-when-elided="true" />
+                <ui:Label text="Programmer" display-tooltip-when-elided="true" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Name" class="Name" style="display: flex;">
+                <ui:Label text="Valentin Posadas" display-tooltip-when-elided="true" />
+                <ui:Label text="Game and Level Designer" display-tooltip-when-elided="true" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Name" class="Name">
+                <ui:Label text="Victor Couturieux" display-tooltip-when-elided="true" />
+                <ui:Label text="Programmer" display-tooltip-when-elided="true" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Name" class="Name">
+                <ui:Label text="Armel Morvan/Kerunos" display-tooltip-when-elided="true" />
+                <ui:Label text="Pixel Artist/Animator" display-tooltip-when-elided="true" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Name" class="Name">
+                <ui:Label text="Baptiste Bourgoin" display-tooltip-when-elided="true" />
+                <ui:Label text="Game Designer" display-tooltip-when-elided="true" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Name" class="Name">
+                <ui:Label text="Brice Cornuau/Daxter" display-tooltip-when-elided="true" />
+                <ui:Label text="Programmer/UI Designer" display-tooltip-when-elided="true" />
+            </ui:VisualElement>
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="Back" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
