@@ -10,13 +10,15 @@ public class GameManager : MonoBehaviour
     private static GameManager m_instance;
     
     [Header("Game Settings")]
-    [SerializeField] private float m_initTimer;
+    [SerializeField] private int m_initTimerToFoundChest = 120;
+    [SerializeField] private float m_initNbRoundToWin = 5;
+    private bool secondChanceUsed = false;
 
     [Header("Game Component")]
     [SerializeField] private GameObject m_mantra;
     [SerializeField] private GameObject m_chest;
-    private GameObject m_player;
-    private GameObject m_place;
+    [SerializeField] private GameObject m_player;
+    [SerializeField] private GameObject m_place;
     private PlayerControl playerScript;
     
     private List<Vector3> soulSpawnPos = null;
@@ -27,8 +29,8 @@ public class GameManager : MonoBehaviour
     private Vector3 currentMantraSpawnPos;
 
     private int mantraCounter = 0;
-
-    private void Awake()
+    
+    void Awake()
     {
         if (m_instance != null && m_instance != this)
         {
@@ -39,26 +41,48 @@ public class GameManager : MonoBehaviour
             m_instance = this;
         }
 
-        m_place = GameObject.FindGameObjectsWithTag("Place")[0];
-        m_player = GameObject.FindGameObjectsWithTag("Player")[0];
         playerScript = m_player.GetComponent<PlayerControl>();
         
         soulSpawnPos = AllSpawnPoint("SpawnSoul");
-        mantraSpawnPos = AllSpawnPoint("SpawnMantra");
         currentSoulSpawnPos = soulSpawnPos[0];
+        mantraSpawnPos = AllSpawnPoint("SpawnMantra");
         currentMantraSpawnPos = mantraSpawnPos[0];
-    }
-    
-    private void Start()
-    {
-        StartGame();
-    }
-    
-    private void Update() 
-    {
         
+        if (m_initNbRoundToWin > mantraSpawnPos.Count) {
+            m_initNbRoundToWin = mantraSpawnPos.Count;
+        }
+    }
+    
+    void Start()
+    {
+        Debug.Log("StartGame");
+        InitNewRound();
+    }
+    
+    void Update() 
+    {
+        if (mantraCounter >= m_initNbRoundToWin) {
+            EndGameWin();
+        }
+    }
+    
+    
+    public void InitNewRound() {
+        //spawn mantra
+        currentMantraSpawnPos = newRandomPos(mantraSpawnPos, currentMantraSpawnPos);
+        Instantiate(m_mantra,  currentMantraSpawnPos, Quaternion.identity);
     }
 
+    public void EndGameLose()
+    {
+        Debug.Log("EndGame Lose");
+    }
+    
+    public void EndGameWin()
+    {
+        Debug.Log("EndGame Win");
+    }
+    
     public void FoundMantra(GameObject mantra) {
         Destroy(mantra);
         playerScript.IntoSoul();
@@ -73,16 +97,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("SpawningChest", bufferPos);
     }
-
-    private IEnumerator SpawningChest(Vector3 bufferPos) 
-    {
-        playerScript.FreezeMoving = true;
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(m_chest,  bufferPos, Quaternion.identity);
-        playerScript.FreezeMoving = false;
-        SoulManager.Instance.WakeUpSouls();
-    }
-
+    
     public void FoundChest(GameObject chest) {
         mantraCounter++;
         Debug.Log("mantraCounter : " + mantraCounter);
@@ -90,28 +105,43 @@ public class GameManager : MonoBehaviour
         playerScript.IntoChest();
         InitNewRound();
         SoulManager.Instance.SleepSouls();
+        secondChanceUsed = true;
+    }
+
+    private IEnumerator SpawningChest(Vector3 bufferPos) 
+    {
+        playerScript.FreezMouving = true;
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(m_chest,  bufferPos, Quaternion.identity);
+        playerScript.FreezMouving = false;
+        SoulManager.Instance.WakeUpSouls();
+        
+        yield return CountdownTimer();
     }
     
-    void InitNewRound() {
-        //spawn mantra
-        currentMantraSpawnPos = newRandomPos(mantraSpawnPos, currentMantraSpawnPos);
-        Instantiate(m_mantra,  currentMantraSpawnPos, Quaternion.identity);
-    }
-
-    private void StartGame() {
-        Debug.Log("StartGame");
-        InitNewRound();
-    }
-
-    public void EndGame()
-    {
-        Debug.Log("EndGame");
+    IEnumerator CountdownTimer() {
+        int counter = m_initTimerToFoundChest;
+        UITimer.Instance.ShowTime();
+        while (counter > 0 && !secondChanceUsed) 
+        {
+            Debug.Log("Timer : " + counter);
+            UITimer.Instance.SetTime((int) Mathf.Floor(counter / 60f), counter%60);
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        if (secondChanceUsed) {
+            secondChanceUsed = false;
+        }
+        else {
+            EndGameLose();
+        }
+        UITimer.Instance.HideTime();
     }
 
     private Vector3 newRandomPos(List<Vector3> listPos, Vector3 oldPos) {
         Vector3 toReturn = oldPos;
         while (toReturn == oldPos) {
-            toReturn = listPos[Random.Range(0, soulSpawnPos.Count)];
+            toReturn = listPos[Random.Range(0, listPos.Count)];
         }
         return toReturn;
     }
@@ -124,9 +154,6 @@ public class GameManager : MonoBehaviour
         }
         return list;
     }
-    
-    public static GameManager Instance { get { return m_instance; } }
-    public GameObject Player { get { return m_place; } }
 
     private void OnDrawGizmos() {
         mantraSpawnPos = AllSpawnPoint("SpawnSoul");
@@ -144,4 +171,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
+    public static GameManager Instance { get { return m_instance; } }
+    public GameObject Player { get { return m_place; } }
+
 }
