@@ -409,7 +409,10 @@ MonoBehaviour:
   constantMove: 1
   threshold: 0.1
   animator: {fileID: 8840193417985333197}
+  renderer: {fileID: 34635088583048502}
   viewDirection: {fileID: 4809226695184438169}
+  oniColor: {r: 1, g: 1, b: 1, a: 1}
+  soulColor: {r: 0.28627452, g: 0.20392157, b: 0.20392157, a: 0.8039216}
   torhByMantra: 1
   torchPrefab: {fileID: 4064678597431013681, guid: 6acaaae2ae24fe843887e057767c8d11, type: 3}
 --- !u!114 &8757020762030751071

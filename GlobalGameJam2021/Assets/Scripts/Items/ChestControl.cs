@@ -12,15 +12,17 @@ namespace Items
         [SerializeField] private Animator animator;
         [SerializeField] private SpriteRenderer renderer;
 
-        private ItemControl item;
+        private Collider2D col;
 
         [HideInInspector] public UnityEvent OnSoulAnimEnded = new UnityEvent();
         [HideInInspector] public UnityEvent OnOniAnimEnded = new UnityEvent();
         
         private void Awake()
         {
+            col = GetComponent<Collider2D>();
+            
             renderer.enabled = false;
-            item.enabled = false;
+            col.enabled = false;
         }
 
         // animate chest in place
@@ -48,12 +50,16 @@ namespace Items
         IEnumerator ToSoulAnimEnded(PlayerControl playerControl, SpriteRenderer playerRenderer)
         {
             yield return new WaitForSeconds(animationDuration);
+            
+            OnSoulAnimEnded.Invoke();
 
             playerRenderer.enabled = true;
             playerControl.FreezeMoving = false;
             playerControl.IntoSoul();
 
-            item.enabled = true;
+            yield return new WaitForSeconds(2f);
+            
+            col.enabled = true;
         }
 
         public void ToOni(GameObject player)
@@ -81,9 +87,11 @@ namespace Items
         {
             yield return new WaitForSeconds(animationDuration);
 
+            OnOniAnimEnded.Invoke();
+            
             playerRenderer.enabled = true;
             playerControl.FreezeMoving = false;
-            playerControl.IntoSoul();
+            playerControl.IntoOni();
             
             Destroy(gameObject);
         }
