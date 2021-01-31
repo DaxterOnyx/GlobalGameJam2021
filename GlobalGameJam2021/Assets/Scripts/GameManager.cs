@@ -110,10 +110,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SpawningChest(Vector3 bufferPos) 
     {
-        playerScript.FreezMouving = true;
+        playerScript.FreezeMoving = true;
         yield return new WaitForSeconds(0.5f);
         Instantiate(m_chest,  bufferPos, Quaternion.identity);
-        playerScript.FreezMouving = false;
+        playerScript.FreezeMoving = false;
         SoulManager.Instance.WakeUpSouls();
         
         yield return CountdownTimer();
