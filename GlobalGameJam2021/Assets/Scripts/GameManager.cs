@@ -67,9 +67,12 @@ public class GameManager : MonoBehaviour
     
     
     public void InitNewRound() {
-        //spawn mantra
+        // spawn mantra
         currentMantraSpawnPos = newRandomPos(mantraSpawnPos, currentMantraSpawnPos);
-        Instantiate(m_mantra,  currentMantraSpawnPos, Quaternion.identity);
+        var mantra = Instantiate(m_mantra,  currentMantraSpawnPos, Quaternion.identity);
+
+        // set objective
+        m_player.GetComponent<PlayerObjective>().Objective = mantra.transform;
     }
 
     public void EndGameLose()
@@ -98,6 +101,9 @@ public class GameManager : MonoBehaviour
         var chest = Instantiate(m_chest,  bufferPos, Quaternion.identity);
         var chestControl = chest.GetComponent<ChestControl>();
 
+        // set objective
+        m_player.GetComponent<PlayerObjective>().Objective = chest.transform;
+        
         chestControl.OnSoulAnimEnded.AddListener(() =>
         {
             m_player.transform.position = currentSoulSpawnPos;
