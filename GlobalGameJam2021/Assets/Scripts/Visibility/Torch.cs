@@ -1,19 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class Torch : MonoBehaviour
 {
-    //TODO torch
-    // Start is called before the first frame update
-    void Start()
+    private List<GameObject> SoulsInArea = new List<GameObject>();
+    private bool isOn = false;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        Debug.Log(other.tag);
+        if ((other.CompareTag("Soul") || other.CompareTag("Player")) && !isOn)
+        {
+            SoulsInArea.Add(other.gameObject);
+            TurnOn();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        
+        if ((other.CompareTag("Soul") || other.CompareTag("Player")) && isOn)
+        {
+            var s = other.gameObject;
+            if (SoulsInArea.Contains(s))
+            {
+                SoulsInArea.Remove(s);
+                if (SoulsInArea.Count == 0)
+                    TurnOff();
+            }
+        }
+    }
+
+    private void TurnOn()
+    {
+        isOn = true;
+        Debug.Log("ON");
+        //TODO TurnON torch
+    }
+
+    private void TurnOff()
+    {
+        isOn = false;
+        Debug.Log("OFF");
+        //TODO TurnOff torch
     }
 }
