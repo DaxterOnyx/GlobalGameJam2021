@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Items;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     private Vector3 currentMantraSpawnPos;
 
     private int mantraCounter = 0;
+
+    private Coroutine timer;
     
     void Awake()
     {
@@ -83,45 +86,56 @@ public class GameManager : MonoBehaviour
         Debug.Log("EndGame Win");
     }
     
-    public void FoundMantra(GameObject mantra) {
+    public void FoundMantra(GameObject mantra) 
+    {
         Destroy(mantra);
-        playerScript.IntoSoul();
         
-        //spawnSoul
+        // select new spawn
         Vector3 bufferPos = m_player.transform.position;
         while (soulSpawnPosUsed.Contains(currentSoulSpawnPos)) {
             currentSoulSpawnPos = newRandomPos(soulSpawnPos, currentSoulSpawnPos);
         }
-        soulSpawnPosUsed.Add(currentSoulSpawnPos);
-        m_player.transform.position = currentSoulSpawnPos;
 
-        StartCoroutine("SpawningChest", bufferPos);
+        soulSpawnPosUsed.Add(currentSoulSpawnPos);
+        
+        // spawn chest
+        var chest = Instantiate(m_chest,  bufferPos, Quaternion.identity);
+        var chestControl = chest.GetComponent<ChestControl>();
+
+        chestControl.OnSoulAnimEnded.AddListener(() =>
+        {
+            m_player.transform.position = currentSoulSpawnPos;
+            SoulManager.Instance.WakeUpSouls();
+            timer = StartCoroutine(CountdownTimer());
+        });
+        
+        // make animations
+        chestControl.ToSoul(m_player);
+
     }
     
-    public void FoundChest(GameObject chest) {
+    public void FoundChest(GameObject chest) 
+    {
         mantraCounter++;
         Debug.Log("mantraCounter : " + mantraCounter);
-        Destroy(chest);
-        playerScript.IntoChest();
-        InitNewRound();
-        SoulManager.Instance.SleepSouls();
-        secondChanceUsed = true;
+        
+        var chestControl = chest.GetComponent<ChestControl>();
+        
+        chestControl.OnOniAnimEnded.AddListener(() =>
+        {
+            InitNewRound();
+            SoulManager.Instance.SleepSouls();
+            StopCoroutine(timer);
+            secondChanceUsed = true;
+        });
+        
+        chestControl.ToOni(m_player);
     }
 
-    private IEnumerator SpawningChest(Vector3 bufferPos) 
-    {
-        playerScript.FreezMouving = true;
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(m_chest,  bufferPos, Quaternion.identity);
-        playerScript.FreezMouving = false;
-        SoulManager.Instance.WakeUpSouls();
-        
-        yield return CountdownTimer();
-    }
-    
     IEnumerator CountdownTimer() {
         int counter = m_initTimerToFoundChest;
         UITimer.Instance.ShowTime();
+        
         while (counter > 0 && !secondChanceUsed) 
         {
             Debug.Log("Timer : " + counter);
@@ -129,12 +143,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             counter--;
         }
-        if (secondChanceUsed) {
-            secondChanceUsed = false;
-        }
-        else {
-            EndGameLose();
-        }
+        
+        if (secondChanceUsed) secondChanceUsed = false;
+        else EndGameLose();
+        
         UITimer.Instance.HideTime();
     }
 

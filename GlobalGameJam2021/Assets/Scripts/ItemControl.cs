@@ -2,21 +2,27 @@ using UnityEngine;
 
 public class ItemControl : MonoBehaviour
 {
-    private Rigidbody2D rigid;
-    
-    // Start is called before the first frame update
-    void Start()
+    enum ItemType
     {
-        rigid = GetComponent<Rigidbody2D>();
+        Chest,
+        Mantra,
     }
+    
+    [SerializeField] private string playerTag = "Player";
+    [SerializeField] private ItemType type = ItemType.Chest;
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.name == "Player")
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (other.CompareTag(playerTag))
         {
-            if (gameObject.transform.name.Contains("Mantra")) {
-                GameManager.Instance.FoundMantra(gameObject);
-            } else if (gameObject.transform.name.Contains("Chest")) {
-                GameManager.Instance.FoundChest(gameObject);
+            switch (type)
+            {
+                case ItemType.Chest: 
+                    GameManager.Instance.FoundChest(gameObject);
+                    break;
+                case ItemType.Mantra:
+                    GameManager.Instance.FoundMantra(gameObject);
+                    break;
             }
         }
     }
