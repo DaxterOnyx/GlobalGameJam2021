@@ -39,6 +39,7 @@ public class Torch : MonoBehaviour
         isOn = true;
         Debug.Log("ON");
         fire.SetActive(true);
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.trigger);
     }
 
     private void TurnOff()

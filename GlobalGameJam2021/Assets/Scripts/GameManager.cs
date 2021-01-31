@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("StartGame");
         InitNewRound();
+        SoundManager.Instance.PlayMusic(SoundManager.Instance.maigoni);
     }
     
     void Update() 
@@ -89,6 +90,8 @@ public class GameManager : MonoBehaviour
     public void FoundMantra(GameObject mantra) 
     {
         Destroy(mantra);
+        
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.trigger2);
         
         // select new spawn
         Vector3 bufferPos = m_player.transform.position;

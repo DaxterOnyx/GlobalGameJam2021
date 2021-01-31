@@ -14,8 +14,11 @@ namespace Visibility
 
         private void Update()
         {
-            if (_tester.IsVisible) 
+            if (_tester.IsVisible)
+            {
+                SoundManager.Instance.PlayEffect(SoundManager.Instance.flip);
                 GameManager.Instance.EndGameLose();
+            }
         }
     }
 }

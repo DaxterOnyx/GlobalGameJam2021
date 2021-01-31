@@ -36,12 +36,16 @@ public class PauseMenu : MonoBehaviour
 
     void ContinueGame()
     {
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.ui_select);
+
         Time.timeScale = 1;
         pauseMenu.style.display = DisplayStyle.None;
     }
 
     void PauseGame()
     {
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.ui_select);
+
         Time.timeScale = 0;
         pauseMenu.style.display = DisplayStyle.Flex;
     }
