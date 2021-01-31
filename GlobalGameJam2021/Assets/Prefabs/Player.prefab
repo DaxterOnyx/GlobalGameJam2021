@@ -266,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list: {fileID: 11400000, guid: 66193e0806c179c439a1cedd67727822, type: 2}
   checkCollider: {fileID: 1657362114197517135}
-  viewAngle: 70
+  viewAngle: 140
   maxDistance: 7
 --- !u!58 &1657362114197517135
 CircleCollider2D:
