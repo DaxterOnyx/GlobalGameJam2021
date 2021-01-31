@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Items;
 using Player;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -18,7 +19,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject m_mantra;
     [SerializeField] private GameObject m_chest;
     [SerializeField] private GameObject m_player;
-    [SerializeField] private GameObject m_place;
     
     private List<Vector3> soulSpawnPos = null;
     private List<Vector3> soulSpawnPosUsed = new List<Vector3>();
@@ -77,11 +77,13 @@ public class GameManager : MonoBehaviour
     public void EndGameLose()
     {
         Debug.Log("EndGame Lose");
+        SceneManager.LoadScene(0);
     }
     
     public void EndGameWin()
     {
         Debug.Log("EndGame Win");
+        SceneManager.LoadScene(0);
     }
     
     public void FoundMantra(GameObject mantra) 
@@ -119,7 +121,6 @@ public class GameManager : MonoBehaviour
     {
         mantraCounter++;
         Debug.Log("mantraCounter : " + mantraCounter);
-        
         var chestControl = chest.GetComponent<ChestControl>();
         
         chestControl.OnOniAnimEnded.AddListener(() =>
@@ -141,7 +142,7 @@ public class GameManager : MonoBehaviour
         
         while (counter > 0)
         {
-            UITimer.Instance.SetTime(counter / 60, counter%60);
+            UIGame.Instance.SetTime(counter / 60, counter%60);
             yield return new WaitForSeconds(1);
             counter--;
         }
