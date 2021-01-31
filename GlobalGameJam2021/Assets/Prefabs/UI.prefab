@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 5753971731977510971}
   - component: {fileID: 5753971731977510970}
   - component: {fileID: 5753971731977510973}
-  - component: {fileID: 5753971731977510968}
+  - component: {fileID: 7827854205719087767}
   m_Layer: 0
   m_Name: GameUI
   m_TagString: Untagged
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
---- !u!114 &5753971731977510968
+--- !u!114 &7827854205719087767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
