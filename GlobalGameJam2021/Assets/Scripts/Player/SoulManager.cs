@@ -92,7 +92,8 @@ public class SoulManager : MonoBehaviour
             soul.StopMove();
         }
 
+        UIGame.Instance.SetSoulCounter(++nbSoul);
         //count the new soul
-        return ++nbSoul;
+        return nbSoul;
     }
 }

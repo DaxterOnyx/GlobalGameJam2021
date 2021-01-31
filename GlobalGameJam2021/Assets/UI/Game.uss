@@ -44,5 +44,5 @@
 }
 
 .unity-button:hover {
-    -unity-background-image-tint-color: rgba(219, 219, 219, 255);
+    -unity-background-image-tint-color: rgb(219, 219, 219);
 }
