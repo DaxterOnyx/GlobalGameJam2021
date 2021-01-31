@@ -13,14 +13,12 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private int m_initTimerToFoundChest = 120;
     [SerializeField] private float m_initNbRoundToWin = 5;
-    private bool secondChanceUsed = false;
 
     [Header("Game Component")]
     [SerializeField] private GameObject m_mantra;
     [SerializeField] private GameObject m_chest;
     [SerializeField] private GameObject m_player;
     [SerializeField] private GameObject m_place;
-    private PlayerControl playerScript;
     
     private List<Vector3> soulSpawnPos = null;
     private List<Vector3> soulSpawnPosUsed = new List<Vector3>();
@@ -44,8 +42,6 @@ public class GameManager : MonoBehaviour
             m_instance = this;
         }
 
-        playerScript = m_player.GetComponent<PlayerControl>();
-        
         soulSpawnPos = AllSpawnPoint("SpawnSoul");
         currentSoulSpawnPos = soulSpawnPos[0];
         mantraSpawnPos = AllSpawnPoint("SpawnMantra");
@@ -125,8 +121,9 @@ public class GameManager : MonoBehaviour
         {
             InitNewRound();
             SoulManager.Instance.SleepSouls();
-            if(timer != null) StopCoroutine(timer);
-            secondChanceUsed = true;
+            
+            StopCoroutine(timer);
+            UITimer.Instance.HideTime();
         });
         
         chestControl.ToOni(m_player);
@@ -134,12 +131,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CountdownTimer() 
     {
-        if (secondChanceUsed)
-        {
-            secondChanceUsed = false;
-            yield break;
-        }
-        
         int counter = m_initTimerToFoundChest;
         UITimer.Instance.ShowTime();
         
@@ -152,7 +143,6 @@ public class GameManager : MonoBehaviour
         }
         
         EndGameLose();
-        
         UITimer.Instance.HideTime();
     }
 
