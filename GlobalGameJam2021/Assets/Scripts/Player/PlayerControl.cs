@@ -54,6 +54,7 @@ namespace Player
                     Instantiate(torchPrefab, transform.position, Quaternion.identity);
                     nbTorch--;
                     UIGame.Instance.SetTorchCount(nbTorch);
+                    SoundManager.Instance.PlayEffect(SoundManager.Instance.low_trigger);
                 }
             }
         }

@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("StartGame");
         InitNewRound();
+        SoundManager.Instance.PlayMusic(SoundManager.Instance.maigoni);
     }
     
     void Update() 
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour
     public void FoundMantra(GameObject mantra) 
     {
         Destroy(mantra);
+        
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.trigger2);
         
         // select new spawn
         Vector3 bufferPos = m_player.transform.position;
@@ -141,7 +144,7 @@ public class GameManager : MonoBehaviour
         
         while (counter > 0)
         {
-            UITimer.Instance.SetTime(counter / 60, counter%60);
+            UIGame.Instance.SetTime(counter / 60, counter%60);
             yield return new WaitForSeconds(1);
             counter--;
         }

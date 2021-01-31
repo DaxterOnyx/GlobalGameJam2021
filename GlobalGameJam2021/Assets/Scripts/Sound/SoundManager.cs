@@ -12,6 +12,17 @@ public class SoundManager : MonoBehaviour
     public float LowPitchRange = 0.95f;
 	public float HighPitchRange = 0.95f;
 
+	public AudioClip flip;
+	public AudioClip footstep1;
+	public AudioClip footstep2;
+	public AudioClip low_trigger;
+	public AudioClip maigoni;
+	public AudioClip trigger;
+	public AudioClip trigger2;
+	public AudioClip ui_move;
+	public AudioClip ui_select;
+	
+	
 	//Singleton
 	public static SoundManager Instance = null;
 

@@ -32,22 +32,29 @@ public class MainMenu : MonoBehaviour
 
     private void OnPlay()
     {
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.ui_select);
+
         SceneManager.LoadScene(1);
     }
 
     private void OnAbout()
     {
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.ui_select);
+
         menu.style.display = DisplayStyle.None;
         credits.style.display = DisplayStyle.Flex;
     }
     
     private void OnQuit()
     {
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.ui_select);
         Application.Quit(0);
     }
 
     private void OnBack()
     {
+        SoundManager.Instance.PlayEffect(SoundManager.Instance.ui_select);
+
         menu.style.display = DisplayStyle.Flex;
         credits.style.display = DisplayStyle.None;
     }
