@@ -65,7 +65,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    
     public void InitNewRound() {
         // spawn mantra
         currentMantraSpawnPos = newRandomPos(mantraSpawnPos, currentMantraSpawnPos);
@@ -142,8 +141,7 @@ public class GameManager : MonoBehaviour
         
         while (counter > 0)
         {
-            Debug.Log("Timer : " + counter);
-            UIGame.Instance.SetTime(counter / 60, counter%60);
+            UITimer.Instance.SetTime(counter / 60, counter%60);
             yield return new WaitForSeconds(1);
             counter--;
         }
