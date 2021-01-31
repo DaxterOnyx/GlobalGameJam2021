@@ -11,8 +11,13 @@ namespace Player
         [SerializeField] private float threshold = 0.1f;
 
         [SerializeField] private Animator animator;
+        [SerializeField] private SpriteRenderer renderer;
         [SerializeField] private Transform viewDirection;
 
+        [Header("Soul and Oni")] 
+        [SerializeField] private Color oniColor;
+        [SerializeField] private Color soulColor;
+        
         private Rigidbody2D rigid;
         private bool moving = false;
         private Camera _cam;
@@ -81,14 +86,14 @@ namespace Player
 
         public void IntoSoul()
         {
-            animator.SetBool("Soul", true);
             PlayerType = Type.Soul;
+            renderer.color = soulColor;
             nbTorch += torhByMantra;
         }
 
-        public void IntoChest()
+        public void IntoOni()
         {
-            animator.SetBool("Soul", false);
+            renderer.color = oniColor;
             PlayerType = Type.Chest;
         }
     }
