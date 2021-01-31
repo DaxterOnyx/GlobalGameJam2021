@@ -1,12 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="Game.uss" />
-    <ui:Label text="00:00" display-tooltip-when-elided="false" name="TimeLeft" view-data-key="TimeLeft" style="-unity-text-align: middle-center; font-size: 24px; color: rgb(255, 255, 255); position: absolute; left: 0; right: 0;" />
+    <ui:Label text="00:00" display-tooltip-when-elided="false" name="TimeLeft" view-data-key="TimeLeft" style="-unity-text-align: middle-center; font-size: 56px; color: rgb(255, 255, 255); position: absolute; left: 0; right: 0;" />
     <ui:VisualElement name="Soul" style="left: 0; bottom: 0; flex-direction: row;">
-        <ui:VisualElement style="background-image: url(&apos;/Assets/Sprites/Anims/Oni/Idle_Front/IdleFace5.png&apos;); -unity-background-image-tint-color: rgba(53, 53, 53, 0.8); width: 35px; height: 46px; margin-left: 0; margin-right: -10px; margin-top: -10px; margin-bottom: 5px;" />
-        <ui:Label text="0" display-tooltip-when-elided="true" name="SoulCounter" />
+        <ui:VisualElement style="background-image: url(&apos;/Assets/Sprites/Anims/Oni/Idle_Front/IdleFace5.png&apos;); -unity-background-image-tint-color: rgba(53, 53, 53, 0.8); width: 70px; height: 92px; margin-left: 0; margin-right: -10px; margin-top: -10px; margin-bottom: 5px;" />
+        <ui:Label text="0" display-tooltip-when-elided="true" name="SoulCounter" style="color: rgba(255, 255, 255, 255);" />
     </ui:VisualElement>
     <ui:VisualElement name="Torch" style="left: 0; bottom: 0; flex-direction: row; align-items: center; justify-content: flex-start; position: absolute;">
-        <ui:VisualElement style="background-image: url(&apos;/Assets/Sprites/Anims/Torch/LanternBase.png&apos;); width: 20px; height: 33px; margin-left: 8px; margin-right: -3px;" />
-        <ui:Label text="0" display-tooltip-when-elided="true" name="TorchCounter" />
+        <ui:VisualElement style="background-image: url(&apos;/Assets/Sprites/Anims/Torch/LanternBase.png&apos;); width: 40px; height: 66px; margin-left: 8px; margin-right: -3px;" />
+        <ui:Label text="0" display-tooltip-when-elided="true" name="TorchCounter" style="color: rgba(255, 255, 255, 255);" />
     </ui:VisualElement>
 </ui:UXML>
