@@ -53,6 +53,7 @@ namespace Player
                 {
                     Instantiate(torchPrefab, transform.position, Quaternion.identity);
                     nbTorch--;
+                    UIGame.Instance.SetTorchCount(nbTorch);
                 }
             }
         }
@@ -89,6 +90,7 @@ namespace Player
             PlayerType = Type.Soul;
             renderer.color = soulColor;
             nbTorch += torhByMantra;
+            UIGame.Instance.SetTorchCount(nbTorch);
         }
 
         public void IntoOni()
