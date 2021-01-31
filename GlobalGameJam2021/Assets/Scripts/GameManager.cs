@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject m_mantra;
     [SerializeField] private GameObject m_chest;
     [SerializeField] private GameObject m_player;
-    [SerializeField] private GameObject m_place;
     private PlayerControl playerScript;
     
     private List<Vector3> soulSpawnPos = null;
@@ -167,24 +166,7 @@ public class GameManager : MonoBehaviour
         return list;
     }
 
-    private void OnDrawGizmos() {
-        mantraSpawnPos = AllSpawnPoint("SpawnSoul");
-        if (mantraSpawnPos != null) {
-            foreach (Vector3 point in mantraSpawnPos) {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(point, 0.15f);
-            }
-        }
-        soulSpawnPos = AllSpawnPoint("SpawnMantra");
-        if (soulSpawnPos != null) {
-            foreach (Vector3 point in soulSpawnPos) {
-                Gizmos.color = Color.magenta;
-                Gizmos.DrawSphere(point, 0.15f);
-            }
-        }
-    }
     
     public static GameManager Instance { get { return m_instance; } }
-    public GameObject Player { get { return m_place; } }
 
 }

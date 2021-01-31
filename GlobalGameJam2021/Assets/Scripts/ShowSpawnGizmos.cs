@@ -1,35 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShowSpawnGizmos : MonoBehaviour
-{
-   
-    [SerializeField] private Color m_colorGizmos;
+public class ShowSpawnGizmos : MonoBehaviour {
 
-    private void OnDrawGizmosSelected() {
-//        Color.magenta : Mantra // Color.green : Soul
-//        Debug.Log("OnDrawGizmosSelected");
-//        foreach (Transform child in transform.GetComponentsInChildren<Transform>()) 
-//        {
-//            if (child.GetComponentsInChildren<Transform>().Length == 1) {
-//                Debug.Log("OnDrawGizmos");
-//                Gizmos.color = m_colorGizmos;
-//                Gizmos.DrawSphere(child.position, 0.15f);
-//            }
-//        }
+    private List<Vector3> spawnPos = null;
+   
+    [SerializeField] private ColorGizmos m_colorGizmos;
+
+    enum ColorGizmos {
+        Mantra,
+        Soul
     }
 
-    private void OnDrawGizmos() 
+    private List<Vector3> AllSpawnPoint(String tag) 
     {
-//        Color.magenta : Mantra // Color.green : Soul
-        Debug.Log("OnDrawGizmos");
-        foreach (Transform child in transform.GetComponentsInChildren<Transform>()) 
-        {
-            if (child.GetComponentsInChildren<Transform>().Length == 1) {
-                Debug.Log("OnDrawGizmos");
-                Gizmos.color = m_colorGizmos;
-                Gizmos.DrawSphere(child.position, 0.15f);
+        List<Vector3> list = new List<Vector3>();
+        foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag(tag)) {
+            list.Add(fooObj.transform.position);
+        }
+        return list;
+    }
+
+    private void OnDrawGizmos() {
+        if (m_colorGizmos == ColorGizmos.Mantra) {
+            spawnPos = AllSpawnPoint("SpawnMantra");
+        }
+        else {
+            spawnPos = AllSpawnPoint("SpawnSoul");
+        }
+        if (spawnPos != null) {
+            foreach (Vector3 point in spawnPos) {
+                if (m_colorGizmos == ColorGizmos.Mantra) {
+                    Gizmos.color = Color.magenta;
+                }
+                else {
+                    Gizmos.color = Color.green;
+                }
+                Gizmos.DrawSphere(point, 0.15f);
             }
         }
     }
