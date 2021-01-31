@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7616442900050728102}
   - component: {fileID: 7616442900050728101}
   - component: {fileID: 7616442900050728100}
-  - component: {fileID: 7616442900050728099}
+  - component: {fileID: 2249892202053258776}
   m_Layer: 0
   m_Name: Poteau1
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7616442900050728098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.49, y: -0.93, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37570137, y: 0.23298192}
   m_EdgeRadius: 0
---- !u!114 &7616442900050728099
+--- !u!114 &2249892202053258776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,24 +119,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7616442900050728098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fd3dbc13636480d936741c2ac28217c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 39659942f56c88563f65b8fd
-  m_ShapePath:
-  - {x: -0.09980717, y: -1.60186, z: 0}
-  - {x: 0.022519052, y: -1.644768, z: 0}
-  - {x: 0.14881748, y: -1.6018603, z: 0}
-  - {x: 0.20675528, y: -1.5146286, z: 0}
-  - {x: 0.1415441, y: -1.441725, z: 0}
-  - {x: 0.026019812, y: -1.4102185, z: 0}
-  - {x: -0.09650603, y: -1.441725, z: 0}
-  - {x: -0.1712228, y: -1.51981, z: 0}
-  m_ShapePathHash: -1563244743
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -375608
