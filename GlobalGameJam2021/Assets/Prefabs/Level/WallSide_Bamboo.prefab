@@ -20,8 +20,12 @@ PrefabInstance:
       value: 7.5625
       objectReference: {fileID: 0}
     - target: {fileID: 4419647212978684269, guid: 0ec0e11a8a91c7e47ac8577f07548224, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419647212978684269, guid: 0ec0e11a8a91c7e47ac8577f07548224, type: 3}
       propertyPath: m_InstanceId
-      value: -15884
+      value: -403754
       objectReference: {fileID: 0}
     - target: {fileID: 4419647212978684270, guid: 0ec0e11a8a91c7e47ac8577f07548224, type: 3}
       propertyPath: m_RootOrder

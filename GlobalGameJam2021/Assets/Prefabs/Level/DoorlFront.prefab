@@ -20,8 +20,12 @@ PrefabInstance:
       value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6446183804901432563, guid: fc2be174ef782be4d96d52dfb67cb4ba, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6446183804901432563, guid: fc2be174ef782be4d96d52dfb67cb4ba, type: 3}
       propertyPath: m_InstanceId
-      value: -14544
+      value: -332160
       objectReference: {fileID: 0}
     - target: {fileID: 6446183804901432564, guid: fc2be174ef782be4d96d52dfb67cb4ba, type: 3}
       propertyPath: m_RootOrder

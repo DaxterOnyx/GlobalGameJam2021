@@ -8,6 +8,7 @@ public class Torch : MonoBehaviour
 {
     private List<GameObject> SoulsInArea = new List<GameObject>();
     private bool isOn = false;
+    [SerializeField] private GameObject fire;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -37,13 +38,13 @@ public class Torch : MonoBehaviour
     {
         isOn = true;
         Debug.Log("ON");
-        //TODO TurnON torch
+        fire.SetActive(true);
     }
 
     private void TurnOff()
     {
         isOn = false;
         Debug.Log("OFF");
-        //TODO TurnOff torch
+        fire.SetActive(false);
     }
 }

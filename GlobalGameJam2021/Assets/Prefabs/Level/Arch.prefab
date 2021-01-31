@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402762510382623749}
   - component: {fileID: 402762510382623754}
+  - component: {fileID: 3408504893796779654}
   m_Layer: 0
   m_Name: ArcheDessous
   m_TagString: Untagged
@@ -82,6 +83,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3408504893796779654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402762510382623748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd3dbc13636480d936741c2ac28217c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &402762511337395464
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402762511337395464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.71, y: -1.18, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 402762512069691201}
@@ -178,6 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402762512069691201}
   - component: {fileID: 402762512069691206}
+  - component: {fileID: 5872532306474546515}
   m_Layer: 0
   m_Name: ArcheDessus
   m_TagString: Untagged
@@ -250,3 +264,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5872532306474546515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402762512069691200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd3dbc13636480d936741c2ac28217c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

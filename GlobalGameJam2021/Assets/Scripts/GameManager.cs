@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
             SoulManager.Instance.SleepSouls();
             
             StopCoroutine(timer);
-            UITimer.Instance.HideTime();
+            UIGame.Instance.HideTime();
         });
         
         chestControl.ToOni(m_player);
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
     IEnumerator CountdownTimer() 
     {
         int counter = m_initTimerToFoundChest;
-        UITimer.Instance.ShowTime();
+        UIGame.Instance.ShowTime();
         
         while (counter > 0)
         {
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
         }
         
         EndGameLose();
-        UITimer.Instance.HideTime();
+        UIGame.Instance.HideTime();
     }
 
     private Vector3 newRandomPos(List<Vector3> listPos, Vector3 oldPos) {
