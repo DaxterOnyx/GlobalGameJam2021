@@ -125,27 +125,33 @@ public class GameManager : MonoBehaviour
         {
             InitNewRound();
             SoulManager.Instance.SleepSouls();
-            StopCoroutine(timer);
+            if(timer != null) StopCoroutine(timer);
             secondChanceUsed = true;
         });
         
         chestControl.ToOni(m_player);
     }
 
-    IEnumerator CountdownTimer() {
+    IEnumerator CountdownTimer() 
+    {
+        if (secondChanceUsed)
+        {
+            secondChanceUsed = false;
+            yield break;
+        }
+        
         int counter = m_initTimerToFoundChest;
         UITimer.Instance.ShowTime();
         
-        while (counter > 0 && !secondChanceUsed) 
+        while (counter > 0)
         {
             Debug.Log("Timer : " + counter);
-            UITimer.Instance.SetTime((int) Mathf.Floor(counter / 60f), counter%60);
+            UITimer.Instance.SetTime(counter / 60, counter%60);
             yield return new WaitForSeconds(1);
             counter--;
         }
         
-        if (secondChanceUsed) secondChanceUsed = false;
-        else EndGameLose();
+        EndGameLose();
         
         UITimer.Instance.HideTime();
     }
